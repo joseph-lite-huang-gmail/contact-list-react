@@ -98,9 +98,23 @@ class App extends React.Component {
   handleEditModalOpen = (event) => {
     console.log("Opening Edit Modal")
     if (event) event.preventDefault();
+
     let contactId = event.target.value;
     console.log(`Editing contact id ${contactId}`)
-    this.setState({ showEditModal: true })
+
+    // submit a GET request to the /contact/{contactId} endpoint
+    // the response should come back with the associated contact's JSON
+    fetch(SERVICE_URL + '/contact/' + contactId)
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+        this.setState(
+          { editContactData: data, showEditModal: true }
+        )
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }
 
   componentDidMount() {
