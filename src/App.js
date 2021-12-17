@@ -75,7 +75,9 @@ class App extends React.Component {
           </Col>
           <Col sm={4}>
             <h2>Add New Contact</h2>
-            <ContactForm contactData={this.state.newContactData} />
+            <ContactForm
+              handleChange={this.handleAddFormChange}
+              contactData={this.state.newContactData} />
           </Col>
         </Row>
         {/* <ContactModal /> */}
