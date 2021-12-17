@@ -117,6 +117,44 @@ class App extends React.Component {
       });
   }
 
+  handleEditFormChange = (event) => {
+    let inputName = event.target.name;
+    let inputValue = event.target.value;
+    let contactInfo = this.state.editContactData;
+
+    console.log(`Something changed in ${inputName} : ${inputValue}`)
+
+    if (contactInfo.hasOwnProperty(inputName)) {
+      contactInfo[inputName] = inputValue;
+      this.setState({ editContactData: contactInfo })
+    }
+
+  }
+
+  handleEditFormSubmit = (event) => {
+    if (event) event.preventDefault();
+    let contactId = event.target.value;
+    console.log(`Submitting edit for contact id ${contactId}`)
+    console.log(this.state.editContactData)
+
+    fetch(SERVICE_URL + '/contact/' + contactId, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(this.state.editContactData),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+        this.setState({ showEditModal: false })
+        this.loadContactData();
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
+
   componentDidMount() {
     console.log("App is now mounted.")
     this.loadContactData();
@@ -150,6 +188,8 @@ class App extends React.Component {
         </Row>
         <ContactModal
           show={this.state.showEditModal}
+          handleSubmit={this.handleEditFormSubmit}
+          handleChange={this.handleEditFormChange}
           handleClose={this.handleEditModalClose}
           contactData={this.state.editContactData} />
       </Container>
