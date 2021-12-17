@@ -90,6 +90,19 @@ class App extends React.Component {
       ))
   }
 
+  handleEditModalClose = (event) => {
+    console.log("Closing Edit Modal")
+    this.setState({ showEditModal: false })
+  }
+
+  handleEditModalOpen = (event) => {
+    console.log("Opening Edit Modal")
+    if (event) event.preventDefault();
+    let contactId = event.target.value;
+    console.log(`Editing contact id ${contactId}`)
+    this.setState({ showEditModal: true })
+  }
+
   componentDidMount() {
     console.log("App is now mounted.")
     this.loadContactData();
@@ -107,17 +120,24 @@ class App extends React.Component {
         <Row>
           <Col sm={8}>
             <h2>My Contacts</h2>
-            <ContactTable contacts={this.state.contactData} />
+            <ContactTable
+              contacts={this.state.contactData}
+              handleEdit={this.handleEditModalOpen}
+            />
           </Col>
           <Col sm={4}>
             <h2>Add New Contact</h2>
             <ContactForm
               handleSubmit={this.handleAddFormSubmit}
               handleChange={this.handleAddFormChange}
-              contactData={this.state.newContactData} />
+              contactData={this.state.newContactData}
+            />
           </Col>
         </Row>
-        {/* <ContactModal /> */}
+        <ContactModal
+          show={this.state.showEditModal}
+          handleClose={this.handleEditModalClose}
+          contactData={this.state.editContactData} />
       </Container>
     );
   }
