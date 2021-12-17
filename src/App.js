@@ -155,6 +155,22 @@ class App extends React.Component {
       });
   }
 
+  handleDeleteContact = (event) => {
+    if (event) event.preventDefault();
+    let contactId = event.target.value;
+    console.log(`Submitting delete for contact id ${contactId}`)
+
+    fetch(SERVICE_URL + '/contact/' + contactId, {
+      method: 'DELETE',
+    })
+      .then(data => {
+        this.loadContactData();
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
+
   componentDidMount() {
     console.log("App is now mounted.")
     this.loadContactData();
@@ -175,6 +191,7 @@ class App extends React.Component {
             <ContactTable
               contacts={this.state.contactData}
               handleEdit={this.handleEditModalOpen}
+              handleDelete={this.handleDeleteContact}
             />
           </Col>
           <Col sm={4}>
