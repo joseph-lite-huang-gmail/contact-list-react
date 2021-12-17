@@ -1,7 +1,10 @@
 import React from 'react';
+import { Form, Button } from 'react-bootstrap'
 
-function ContactForm() {
-    return <h1>Contact Form</h1>
+class ContactForm extends React.Component {
+    render() {
+        return (<h1>Contact Form</h1>)
+    }
 }
 
 export default ContactForm
