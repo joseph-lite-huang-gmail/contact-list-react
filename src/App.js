@@ -9,6 +9,8 @@ import ContactModal from './components/ContactModal'
 import { Container, Row, Col } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+const SERVICE_URL = "http://contactlist.us-east-1.elasticbeanstalk.com"
+
 class App extends React.Component {
 
   state = {
@@ -21,6 +23,17 @@ class App extends React.Component {
         "phone": "000-0000",
         "email": "fakedata@unknown.io"
       }]
+  }
+
+  componentDidMount() {
+    console.log("App is now mounted.")
+    this.setState({ loading: true })
+    console.log("Loading contact data")
+    fetch(SERVICE_URL + "/contacts")
+      .then(data => data.json())
+      .then(data => this.setState(
+        { contactData: data, loading: false }
+      ))
   }
 
   render() {
