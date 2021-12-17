@@ -1,7 +1,10 @@
 import React from 'react';
+import { Table, Button } from 'react-bootstrap'
 
-function ContactTable() {
-    return <h1>Contact Table</h1>
+class ContactTable extends React.Component {
+    render(){
+        return (<h1>Contact Table</h1>)
+    }
 }
 
 export default ContactTable
