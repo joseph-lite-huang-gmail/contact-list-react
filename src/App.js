@@ -48,8 +48,30 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount() {
-    console.log("App is now mounted.")
+  handleAddFormSubmit = (event) => {
+    console.log("Adding contact!")
+    if (event) event.preventDefault();
+
+    fetch(SERVICE_URL + '/contact/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(this.state.newContactData),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Add Contact - Success:', data);
+        this.setState({ newContactData: { firstName: '', lastName: '', company: '', phone: '', email: '' } })
+        this.loadContactData();
+      })
+      .catch((error) => {
+        console.log('Add Contact - Error:')
+        console.log(error)
+      });
+  }
+
+  loadContactData() {
     this.setState({ loading: true })
     console.log("Loading contact data")
     fetch(SERVICE_URL + "/contacts")
@@ -57,6 +79,11 @@ class App extends React.Component {
       .then(data => this.setState(
         { contactData: data, loading: false }
       ))
+  }
+
+  componentDidMount() {
+    console.log("App is now mounted.")
+    this.loadContactData();
   }
 
   render() {
@@ -76,6 +103,7 @@ class App extends React.Component {
           <Col sm={4}>
             <h2>Add New Contact</h2>
             <ContactForm
+              handleSubmit={this.handleAddFormSubmit}
               handleChange={this.handleAddFormChange}
               contactData={this.state.newContactData} />
           </Col>

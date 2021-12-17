@@ -3,9 +3,9 @@ import { Form, Button } from 'react-bootstrap'
 
 class ContactForm extends React.Component {
     render() {
-        let { contactData, handleChange } = this.props;
+        let { contactData, handleSubmit, handleChange } = this.props;
         return (
-            <Form>
+            <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="contactFirstName">
                     <Form.Label>First Name:</Form.Label>
                     <Form.Control type="text" placeholder="First Name" name="firstName"
