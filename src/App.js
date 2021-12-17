@@ -32,6 +32,22 @@ class App extends React.Component {
     }
   }
 
+  handleAddFormChange = (event) => {
+    // The event triggering this function should be an input's onChange event
+    // We need to grab the input's name & value so we can associate it with the
+    // newContactData within the App's state.
+    let inputName = event.target.name;
+    let inputValue = event.target.value;
+    let contactInfo = this.state.newContactData;
+
+    console.log(`Updating new contact data: ${inputName} : ${inputValue}`)
+
+    if (contactInfo.hasOwnProperty(inputName)) {
+      contactInfo[inputName] = inputValue;
+      this.setState({ newContactData: contactInfo })
+    }
+  }
+
   componentDidMount() {
     console.log("App is now mounted.")
     this.setState({ loading: true })
