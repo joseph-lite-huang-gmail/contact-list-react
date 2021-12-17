@@ -15,6 +15,7 @@ class App extends React.Component {
 
   state = {
     loading: false,
+    showEditModal: false,
     contactData: [
       {
         "contactId": 1, "firstName": "Fake",
@@ -29,6 +30,14 @@ class App extends React.Component {
       company: '',
       phone: '',
       email: ''
+    },
+    editContactData: {
+      "contactId": 42,
+      "firstName": "Zaphod",
+      "lastName": "Beeblebrox",
+      "company": "Heart of Gold",
+      "phone": "000-0000",
+      "email": "prez@badnews.us"
     }
   }
 
